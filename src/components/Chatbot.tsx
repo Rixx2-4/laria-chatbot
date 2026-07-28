@@ -168,8 +168,8 @@ function createId() {
 const messageTemplates: MessageTemplate[] = [
   {
     role: "assistant",
-    name: "Nova",
-    avatarFallback: "NO",
+    name: "Lara",
+    avatarFallback: "LA",
     content:
       "¡Hola! Soy Nova, un asistente impulsado por prompt-kit. Pregúntame sobre tus ideas de producto, preguntas técnicas o tareas de investigación y trazaré un plan que puedas conectar a tu modelo favorito.",
   },
@@ -181,8 +181,8 @@ const messageTemplates: MessageTemplate[] = [
   },
   {
     role: "assistant",
-    name: "Nova",
-    avatarFallback: "NO",
+    name: "Lara",
+    avatarFallback: "LA",
     markdown: true,
     content: [
       "Claro, aquí tienes un esquema estructurado que puedes usar:",
@@ -230,8 +230,8 @@ function createPlaceholderConversation(title: string, preview: string): Conversa
     {
       id: createId(),
       role: "assistant",
-      name: "Nova",
-      avatarFallback: "NO",
+      name: "Lara",
+      avatarFallback: "LA",
       markdown: true,
       reaction: null,
       content: [
@@ -485,8 +485,8 @@ function Chatbot() {
     const assistantMessage: ConversationMessage = {
       id: createId(),
       role: "assistant",
-      name: "Nova",
-      avatarFallback: "NO",
+      name: "Lara",
+      avatarFallback: "LA",
       markdown: true,
       reaction: null,
       content: [
