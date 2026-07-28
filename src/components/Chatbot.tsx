@@ -120,42 +120,42 @@ const providers: ProviderOption[] = [
 
 const historySeed: HistoryGroup[] = [
   {
-    label: "Today",
+    label: "Hoy",
     conversations: [
       {
         id: "today-1",
-        title: "Product launch prep",
-        preview: "Drafted announcement copy and QA checklist for beta release.",
-        timestamp: "2h ago",
+        title: "Preparación de lanzamiento",
+        preview: "Borrador del anuncio y lista de verificación para el beta.",
+        timestamp: "hace 2h",
       },
       {
         id: "today-2",
-        title: "Onboarding survey",
-        preview: "Outlined questions that capture first-week friction and success signals.",
-        timestamp: "4h ago",
+        title: "Encuesta de onboarding",
+        preview: "Preguntas que capturan fricción y señales de éxito en la primera semana.",
+        timestamp: "hace 4h",
       },
       {
         id: "today-3",
-        title: "Design critique notes",
-        preview: "Summarised feedback threads and grouped by priority / owner.",
-        timestamp: "6h ago",
+        title: "Notas de crítica de diseño",
+        preview: "Resumí hilos de comentarios y los agrupé por prioridad/responsable.",
+        timestamp: "hace 6h",
       },
     ],
   },
   {
-    label: "Earlier this week",
+    label: "Principios de esta semana",
     conversations: [
       {
         id: "week-1",
-        title: "Support triage ideas",
-        preview: "Generated macros for the top friction requests from this week.",
-        timestamp: "3 days ago",
+        title: "Ideas de triaje de soporte",
+        preview: "Generé macros para las solicitudes más críticas de esta semana.",
+        timestamp: "hace 3 días",
       },
       {
         id: "week-2",
-        title: "Growth experiment doc",
-        preview: "Mapped out hypotheses, guardrail metrics, and rollout cadence.",
-        timestamp: "5 days ago",
+        title: "Documento de experimento de crecimiento",
+        preview: "Mapeé hipótesis, métricas de control y cadencia de implementación.",
+        timestamp: "hace 5 días",
       },
     ],
   },
@@ -171,13 +171,13 @@ const messageTemplates: MessageTemplate[] = [
     name: "Nova",
     avatarFallback: "NO",
     content:
-      "Hey there! I'm Nova, a prompt-kit powered assistant. Ask me anything about your product ideas, technical questions, or research tasks and I'll sketch out a plan you can wire up to your favourite model.",
+      "¡Hola! Soy Nova, un asistente impulsado por prompt-kit. Pregúntame sobre tus ideas de producto, preguntas técnicas o tareas de investigación y trazaré un plan que puedas conectar a tu modelo favorito.",
   },
   {
     role: "user",
-    name: "You",
-    avatarFallback: "YO",
-    content: "Let's create a user interview outline that digs into motivation and workflow pains.",
+    name: "Tú",
+    avatarFallback: "TÚ",
+    content: "Creemos un esquema de entrevista de usuario que profundice en la motivación y los problemas del flujo de trabajo.",
   },
   {
     role: "assistant",
@@ -185,16 +185,16 @@ const messageTemplates: MessageTemplate[] = [
     avatarFallback: "NO",
     markdown: true,
     content: [
-      "Absolutely — here's a structured outline you can use:",
+      "Claro, aquí tienes un esquema estructurado que puedes usar:",
       "",
-      "### Interview Outline",
-      "1. **Warm up** — \"Can you tell me about your role and day-to-day responsibilities?\"",
-      "2. **Motivation** — \"What made you start using [product/workflow]?\"",
-      "3. **Current process** — \"Walk me through your last attempt step-by-step.\"",
-      "4. **Pain points** — \"Where does it feel slow, confusing, or fragile?\"",
-      "5. **Desired outcomes** — \"If this was effortless, what would that unlock for you?\"",
+      "### Esquema de Entrevista",
+      "1. **Calentamiento** — \"¿Puedes contarme sobre tu rol y responsabilidades diarias?\"",
+      "2. **Motivación** — \"¿Qué te llevó a empezar a usar [producto/flujo de trabajo]?\"",
+      "3. **Proceso actual** — \"Guíame a través de tu último intento paso a paso.\"",
+      "4. **Puntos débiles** — \"¿Dónde se siente lento, confuso o frágil?\"",
+      "5. **Resultados deseados** — \"Si esto fuera sencillo, ¿qué desbloquearía para ti?\"",
       "",
-      "Happy to tailor this if you share the audience or use case!",
+      "¡Puedo ajustar esto si compartes la audiencia o el caso de uso!",
     ].join("\n"),
   },
 ];
@@ -235,11 +235,11 @@ function createPlaceholderConversation(title: string, preview: string): Conversa
       markdown: true,
       reaction: null,
       content: [
-        `This is a placeholder view for **${title}**.`,
+        `Esta es una vista provisional para **${title}**.`,
         "",
         preview,
         "",
-        "Load real messages here by persisting conversations and hydrating them when the user opens the thread.",
+        "Carga aquí los mensajes reales persistindo las conversaciones.",
       ].join("\n"),
     },
   ];
@@ -276,7 +276,7 @@ function findConversationTitle(groups: HistoryGroup[], conversationId: string): 
       return conversation.title;
     }
   }
-  return "Untitled chat";
+  return "Chat sin título";
 }
 
 function truncateText(text: string, limit = 80): string {
@@ -309,7 +309,7 @@ function promoteConversation(
   const updated = updater(existing);
 
   if (next.length === 0) {
-    next.push({ label: "Today", conversations: [] });
+    next.push({ label: "Hoy", conversations: [] });
   }
 
   next[0].conversations = [
@@ -381,7 +381,7 @@ function Chatbot() {
         id: existing.id,
         title: title ?? existing.title,
         preview: truncateText(preview),
-        timestamp: "Just now",
+        timestamp: "Ahora",
       })),
     );
   };
@@ -465,17 +465,17 @@ function Chatbot() {
     const attachments = composerAttachments.map((attachment) => ({ ...attachment }));
     const attachmentsSummary =
       attachments.length > 0
-        ? `Shared ${attachments.length} attachment${attachments.length > 1 ? "s" : ""}`
+        ? `Compartió ${attachments.length} archivo${attachments.length === 1 ? "" : "s"} adjunto${attachments.length === 1 ? "" : "s"}`
         : undefined;
 
     const userContent =
-      prompt || attachmentsSummary || "Sent a message";
+      prompt || attachmentsSummary || "Envió un mensaje";
 
     const userMessage: ConversationMessage = {
       id: createId(),
       role: "user",
-      name: "You",
-      avatarFallback: "YO",
+      name: "Tú",
+      avatarFallback: "TÚ",
       content: userContent,
       attachments: attachments.length ? attachments : undefined,
       reaction: null,
@@ -490,11 +490,11 @@ function Chatbot() {
       markdown: true,
       reaction: null,
       content: [
-        `Pretending to call ${providerSummary}.`,
+        `Simulando llamada a ${providerSummary}.`,
         attachments.length
-          ? `I spotted ${attachments.length} attachment${attachments.length > 1 ? "s" : ""}. Replace this with your vision/tool call.`
+          ? `Vi ${attachments.length} archivo${attachments.length === 1 ? "" : "s"} adjunto${attachments.length === 1 ? "" : "s"}. Reemplaza esto con tu visión/llamada de herramienta.`
           : undefined,
-        "Swap this helper with your real API handler and stream tokens into the conversation.",
+        "Reemplaza este helper con tu manejador de API real y transmite tokens a la conversación.",
       ]
         .filter(Boolean)
         .join("\n\n"),
@@ -503,7 +503,7 @@ function Chatbot() {
     updateConversationMessages(conversationId, (current) => [...current, userMessage]);
     refreshHistoryPreview(
       conversationId,
-      prompt || attachmentsSummary || "Sent a message",
+      prompt || attachmentsSummary || "Envió un mensaje",
       conversationTitle,
     );
 
@@ -520,7 +520,7 @@ function Chatbot() {
 
   const handleNewChat = () => {
     const conversationId = createId();
-    const conversationTitle = `Untitled chat ${chatCounter}`;
+    const conversationTitle = `Chat sin título ${chatCounter}`;
 
     setChatCounter((count) => count + 1);
     setConversations((previous) => ({
@@ -538,14 +538,14 @@ function Chatbot() {
     setHistoryGroups((previous) => {
       const next = cloneHistoryGroups(previous);
       if (next.length === 0) {
-        next.push({ label: "Today", conversations: [] });
+        next.push({ label: "Hoy", conversations: [] });
       }
       next[0].conversations = [
         {
           id: conversationId,
           title: conversationTitle,
-          preview: "Say hello to Nova to get started.",
-          timestamp: "Just now",
+          preview: "Saluda a Nova para empezar.",
+        timestamp: "Ahora",
         },
         ...next[0].conversations,
       ];
@@ -604,10 +604,10 @@ function Chatbot() {
       >
         <div className="flex items-center justify-between border-b border-border px-4 py-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-              History
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+              Historial
             </p>
-            <p className="text-sm font-medium text-foreground">Recent chats</p>
+            <p className="text-sm font-medium text-foreground">Chats recientes</p>
           </div>
           <div className="flex items-center gap-1">
             <ThemeToggle className="lg:hidden" />
@@ -616,7 +616,7 @@ function Chatbot() {
               size="icon"
               className="lg:hidden"
               onClick={() => setIsSidebarOpen(false)}
-              aria-label="Close chat history"
+              aria-label="Cerrar historial"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -625,7 +625,7 @@ function Chatbot() {
         <div className="border-b border-border px-4 pb-4 pt-3">
           <Button variant="outline" size="sm" className="w-full" onClick={handleNewChat}>
             <Plus className="h-4 w-4" />
-            <span className="ml-2">New chat</span>
+            <span className="ml-2">Nuevo chat</span>
           </Button>
         </div>
         <div className="flex-1 overflow-y-auto pb-6">
@@ -674,7 +674,7 @@ function Chatbot() {
                 size="icon"
                 className="lg:hidden"
                 onClick={() => setIsSidebarOpen(true)}
-                aria-label="Open chat history"
+                  aria-label="Abrir historial"
               >
                 <Menu className="h-4 w-4" />
               </Button>
@@ -683,7 +683,7 @@ function Chatbot() {
                 size="icon"
                 className="hidden lg:inline-flex"
                 onClick={() => setIsSidebarCollapsed((v) => !v)}
-                aria-label={isSidebarCollapsed ? "Show sidebar" : "Hide sidebar"}
+                aria-label={isSidebarCollapsed ? "Mostrar panel" : "Ocultar panel"}
               >
                 {isSidebarCollapsed ? (
                   <PanelLeftOpen className="h-4 w-4" />
@@ -771,7 +771,7 @@ function Chatbot() {
                               )}
                             >
                               <MessageAction
-                                tooltip={copiedMessageId === message.id ? "Copied" : "Copy message"}
+                                tooltip={copiedMessageId === message.id ? "Copiado" : "Copiar mensaje"}
                                 delayDuration={100}
                               >
                                 <Button
@@ -786,7 +786,7 @@ function Chatbot() {
                                     event.stopPropagation();
                                     handleCopy(message);
                                   }}
-                                  aria-label={copiedMessageId === message.id ? "Message copied" : "Copy message"}
+                                  aria-label={copiedMessageId === message.id ? "Mensaje copiado" : "Copiar mensaje"}
                                 >
                                   {copiedMessageId === message.id ? (
                                     <Check className="h-4 w-4" />
@@ -797,7 +797,7 @@ function Chatbot() {
                               </MessageAction>
                               <MessageAction
                                 tooltip={
-                                  message.reaction === "upvote" ? "Remove like" : "Mark response as helpful"
+                                  message.reaction === "upvote" ? "Quitar like" : "Marcar como útil"
                                 }
                                 delayDuration={100}
                               >
@@ -814,14 +814,14 @@ function Chatbot() {
                                     toggleReaction(message.id, "upvote");
                                   }}
                                   aria-pressed={message.reaction === "upvote"}
-                                  aria-label="Mark response as helpful"
+                                  aria-label="Marcar como útil"
                                 >
                                   <ThumbsUp className="h-4 w-4" />
                                 </Button>
                               </MessageAction>
                               <MessageAction
                                 tooltip={
-                                  message.reaction === "downvote" ? "Remove dislike" : "Mark response as not helpful"
+                                  message.reaction === "downvote" ? "Quitar dislike" : "Marcar como no útil"
                                 }
                                 delayDuration={100}
                               >
@@ -838,7 +838,7 @@ function Chatbot() {
                                     toggleReaction(message.id, "downvote");
                                   }}
                                   aria-pressed={message.reaction === "downvote"}
-                                  aria-label="Mark response as not helpful"
+                                  aria-label="Marcar como no útil"
                                 >
                                   <ThumbsDown className="h-4 w-4" />
                                 </Button>
@@ -870,9 +870,9 @@ function Chatbot() {
             <div className="flex flex-col gap-3">
               {composerAttachments.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-                    Attachments
-                  </p>
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-muted-foreground">
+                Archivos adjuntos
+              </p>
                   <div className="flex flex-wrap gap-3">
                     {composerAttachments.map((attachment) => (
                       <div
@@ -892,7 +892,7 @@ function Chatbot() {
                             event.stopPropagation();
                             handleRemoveAttachment(attachment.id);
                           }}
-                          aria-label={`Remove ${attachment.name}`}
+                          aria-label={`Eliminar ${attachment.name}`}
                         >
                           <X className="h-3 w-3" />
                         </button>
@@ -907,18 +907,18 @@ function Chatbot() {
               )}
 
               <PromptInputTextarea
-                aria-label="Message"
-                placeholder="Message"
+                aria-label="Mensaje"
+                placeholder="Mensaje"
                 onPaste={handlePasteImages}
               />
 
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <PromptInputAction tooltip="Paste or upload an image" side="top">
+                  <PromptInputAction tooltip="Pega o sube una imagen" side="top">
                     <Button asChild variant="ghost" size="icon" className="rounded-full">
                       <label className="flex cursor-pointer items-center justify-center">
                         <Image className="h-5 w-5" />
-                        <span className="sr-only">Attach image</span>
+                          <span className="sr-only">Adjuntar imagen</span>
                         <input
                           type="file"
                           accept="image/*"
@@ -931,7 +931,7 @@ function Chatbot() {
                   </PromptInputAction>
 
                   <div className="relative">
-                    <PromptInputAction tooltip="Select provider" side="top">
+                    <PromptInputAction tooltip="Seleccionar proveedor" side="top">
                       <Button
                         type="button"
                         variant="ghost"
@@ -973,7 +973,7 @@ function Chatbot() {
                   </div>
 
                   <div className="relative">
-                    <PromptInputAction tooltip="Select model" side="top">
+                    <PromptInputAction tooltip="Seleccionar modelo" side="top">
                       <Button
                         type="button"
                         variant="ghost"
@@ -1015,7 +1015,7 @@ function Chatbot() {
                   </div>
                 </div>
                 <PromptInputActions>
-                  <PromptInputAction tooltip="Send message" delayDuration={100}>
+                  <PromptInputAction tooltip="Enviar mensaje" delayDuration={100}>
                     <Button
                       type="button"
                       size="icon"

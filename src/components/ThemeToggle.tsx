@@ -59,7 +59,7 @@ function ThemeToggle({ className }: { className?: string }) {
       size="icon"
       className={cn("rounded-full", className)}
       onClick={handleToggle}
-      aria-label="Toggle theme"
+      aria-label="Cambiar tema"
     >
       {isReady && theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </Button>
