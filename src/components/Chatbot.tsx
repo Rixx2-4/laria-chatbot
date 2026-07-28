@@ -456,7 +456,7 @@ function Chatbot() {
     );
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!hasPendingInput || isGenerating) return;
 
     const conversationId = activeConversationId;
@@ -481,25 +481,6 @@ function Chatbot() {
       reaction: null,
     };
 
-    const providerSummary = `${activeProvider.label} • ${activeModel.label}`;
-    const assistantMessage: ConversationMessage = {
-      id: createId(),
-      role: "assistant",
-      name: "Lara",
-      avatarFallback: "LA",
-      markdown: true,
-      reaction: null,
-      content: [
-        `Simulando llamada a ${providerSummary}.`,
-        attachments.length
-          ? `Vi ${attachments.length} archivo${attachments.length === 1 ? "" : "s"} adjunto${attachments.length === 1 ? "" : "s"}. Reemplaza esto con tu visión/llamada de herramienta.`
-          : undefined,
-        "Reemplaza este helper con tu manejador de API real y transmite tokens a la conversación.",
-      ]
-        .filter(Boolean)
-        .join("\n\n"),
-    };
-
     updateConversationMessages(conversationId, (current) => [...current, userMessage]);
     refreshHistoryPreview(
       conversationId,
@@ -512,10 +493,54 @@ function Chatbot() {
     setCopiedMessageId(null);
     setIsGenerating(true);
 
-    window.setTimeout(() => {
+    const apiMessages = [
+      ...messages,
+      userMessage,
+    ].map((m) => ({
+      role: m.role,
+      content: m.content,
+    }));
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || `Error ${res.status}`);
+      }
+
+      const reply = data.choices?.[0]?.message?.content || "Sin respuesta";
+
+      const assistantMessage: ConversationMessage = {
+        id: createId(),
+        role: "assistant",
+        name: "Lara",
+        avatarFallback: "LA",
+        markdown: true,
+        reaction: null,
+        content: reply,
+      };
+
       updateConversationMessages(conversationId, (current) => [...current, assistantMessage]);
+    } catch (error) {
+      const errorMessage: ConversationMessage = {
+        id: createId(),
+        role: "assistant",
+        name: "Lara",
+        avatarFallback: "LA",
+        markdown: false,
+        reaction: null,
+        content: error instanceof Error ? error.message : "Error al conectar con la API",
+      };
+      updateConversationMessages(conversationId, (current) => [...current, errorMessage]);
+    } finally {
       setIsGenerating(false);
-    }, 600);
+    }
   };
 
   const handleNewChat = () => {
