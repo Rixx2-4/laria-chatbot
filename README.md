@@ -1,200 +1,48 @@
-# 🚀 [Astro AI Chatbot Template - Vercel SDK Edition](https://template-astro-vercel-sdk-ai-chatbo.vercel.app/)
+# LARIA — Frontend
 
-<div align="center">
+Tutor inteligente adaptativo. Interfaz Astro + React conectada al backend FastAPI (`feature/backend`).
 
-<img src="https://github.com/user-attachments/assets/7191280a-c335-415e-a74c-307e9174ce84"
-     alt="Astro Template"
-     width="1920" height="1080"
-     style="display:block; margin-bottom:20px;" />
+## Idea
 
-![Astro](https://astro.build/assets/press/astro-icon-light-gradient.svg)
+LARIA no es un chatbot genérico. El estudiante sube material, pregunta sobre ese documento, practica con quizzes y consulta su **perfil cognitivo**. La pedagogía (modo, dificultad, prerrequisitos, olvido) vive en el backend; esta UI solo consume la API.
 
-[![Available at](https://img.shields.io/badge/Available%20at-Astro%20Themes-purple?style=for-the-badge&link=https://astro.build/themes/)](https://portal.astro.build/themes/ai-chat-bot/) 
+## Requisitos
 
-[![Astro](https://img.shields.io/badge/Astro-0C1222?style=for-the-badge&logo=astro&logoColor=FDFDFE)](https://astro.build) [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org) [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org) [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com) [![Vercel AI SDK](https://img.shields.io/badge/Vercel%20AI%20SDK-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://sdk.vercel.ai) [![Prompt Kit](https://img.shields.io/badge/Prompt%20Kit-FF6B6B?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iI0ZGNjI2QiIvPgo8cGF0aCBkPSJNMTIgN2w0IDQgNCA0djEwYzAtNC40LTMuNi0zLjYtMy42LTMuNnoiIGZpbGw9IiMwMDAwMDAiLz4KPHBhdGggZD0iTTEyIDE3bC00LTRsNC00djhoIiBmaWxsPSIjMDAwMDAwIi8+Cjwvc3ZnPgo=)](https://prompt-kit.dev)
+- Node 20+ / pnpm
+- Backend LARIA en marcha (`PUBLIC_LARIA_API_URL`)
+- CORS del backend debe incluir el origen del frontend (`http://localhost:4321` en local)
 
-</div>
+## Configuración
 
-## 🌟 Overview
-
-Astro AI Chatbot Template is a modern, production-ready template for building AI-powered chat interfaces. Built with Astro, React, and the Vercel AI SDK, it provides a beautiful, responsive UI with mock implementations that you can easily replace with real AI providers.
-
-Perfect for developers who want to quickly bootstrap AI chat applications with multiple provider support, conversation history, file uploads, and a polished user experience.
-
-## 🚀 Quick Start
-
-1. **Clone and Install**
-
-   ```bash
-   git clone https://github.com/Marve10s/Astro-Vercel-SDK-AI-Chatbot.git
-   cd Astro-Vercel-SDK-AI-Chatbot
-   pnpm install
-   ```
-
-   **Or Fork and Install**
-
-   1.1 Click the 'Fork' button in the top right corner of this repository
-
-   1.2 Clone your forked repository
-
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/Astro-Vercel-SDK-AI-Chatbot.git
-   cd Astro-Vercel-SDK-AI-Chatbot && pnpm install
-   ```
-
-2. **Development**
-
-   ```bash
-   pnpm dev
-   ```
-
-3. **Configure Environment**
-
-   ```bash
-   cp .env.example .env.local
-   ```
-
-   Add your API keys for the providers you want to use:
-   - OpenAI (`OPENAI_API_KEY`)
-   - Anthropic (`ANTHROPIC_API_KEY`)
-   - Google Gemini (`GOOGLE_GENERATIVE_AI_API_KEY`)
-   - Groq (`GROQ_API_KEY`)
-
-4. **Build**
-
-   ```bash
-   pnpm build
-   pnpm preview
-   ```
-
-## ⭐ Features
-
-- 🤖 **Multiple AI Providers** - OpenAI, Anthropic, Google Gemini, Groq
-- 💬 **Real-time Streaming** - Token-by-token response streaming
-- 📁 **File Uploads** - Support for image attachments
-- 🌙 **Dark/Light Mode** - Built-in theme switching
-- 💾 **Conversation History** - Persistent chat sessions
-- 📱 **Responsive Design** - Mobile-first approach
-- 🎨 **Beautiful UI** - Modern design with Tailwind CSS
-- ⚡ **Fast Performance** - Astro's static generation + React islands
-- 🔧 **TypeScript** - Full type safety
-- 🧩 **Modular Components** - Easy to customize and extend
-
-## 📁 Project Structure
-
-```plaintext
-/
-├── public/              # Static assets
-├── src/
-│   ├── components/
-│   │   ├── Chatbot.tsx          # Main chat interface
-│   │   ├── ThemeToggle.tsx      # Theme switcher
-│   │   ├── prompt-kit/          # UI primitives
-│   │   │   ├── chat-container.tsx
-│   │   │   ├── message.tsx
-│   │   │   ├── prompt-input.tsx
-│   │   │   └── ...
-│   │   └── ui/                  # Shared UI components
-│   ├── lib/
-│   │   └── utils.ts             # Utility functions
-│   ├── mocks/                   # Mock implementations
-│   │   ├── ai-vercel-sdk.ts     # AI provider mocks
-│   │   └── supabase.ts          # Database mocks
-│   ├── pages/
-│   │   └── index.astro          # Main page
-│   └── styles/
-│       └── global.css           # Global styles + Tailwind
-├── astro.config.mjs     # Astro configuration
-├── tailwind.config.mjs  # Tailwind configuration
-└── package.json
+```bash
+cp .env.example .env
+# PUBLIC_LARIA_API_URL=http://IP-DEL-BACKEND:8000
+pnpm install
+pnpm dev
 ```
 
-## 📊 Performance
+## Scripts
 
-<div>
+| Comando | Descripción |
+|---------|-------------|
+| `pnpm dev` | Desarrollo en :4321 |
+| `pnpm build` | Build estático |
+| `pnpm preview` | Preview del build |
 
-[![PageSpeed Desktop](https://img.shields.io/badge/PageSpeed%20Desktop-98-success?style=for-the-badge&logo=pagespeed-insights)](https://pagespeed.web.dev/)
+## Persistencia
 
-| Metric            | Score   |
-| ----------------- | ------- |
-| 🚀 Performance    | 98/100  |
-| ♿ Accessibility  | 96/100  |
-| 🏗️ Best Practices | 100/100 |
-| 🔍 SEO            | 100/100 |
+**No se usa `localStorage` / `sessionStorage`.** Documentos, interacciones, quizzes y mastery viven en MongoDB vía API. El JWT de sesión está solo en memoria (recargar la página pide login de nuevo).
 
-</div>
+## Flujo de ramas (monorepo)
 
-## 🛠️ Customization
-
-### AI Providers
-
-Add support for new AI providers by extending the mock implementations in `src/mocks/ai-vercel-sdk.ts`:
-
-```typescript
-export type Provider = "openai" | "anthropic" | "google" | "groq" | "your-provider";
+```
+feature/frontend → develop → main
 ```
 
-### UI Components
+Este repo de trabajo se sincroniza a `sa2009966/LARIA-IA` en `feature/frontend`.
 
-- Modify `src/components/prompt-kit/` for core UI changes
-- Add custom components in `src/components/`
-- Customize themes in `src/styles/global.css`
+## Vercel
 
-### Backend Integration
-
-Replace mock functions with real API calls:
-
-```typescript
-// Replace this in Chatbot.tsx
-import { generateChat } from "@/mocks/ai-vercel-sdk";
-
-// With your real implementation
-import { generateChat } from "@/lib/ai-service";
-```
-
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. Push to GitHub
-2. Connect to Vercel
-3. Add environment variables
-4. Deploy!
-
-### Other Platforms
-
-The template works with any static hosting service. For API routes, use:
-
-```typescript
-// src/pages/api/chat.ts
-export const config = { runtime: "edge" };
-
-export async function POST({ request }) {
-  // Your AI logic here
-}
-```
-
-## 🎨 Share Your Creation
-
-Have you built something amazing with this template? I'd love to see it!
-
-- Create a [GitHub issue](https://github.com/yourusername/astro-ai-chatbot-template/issues) with screenshots
-- Share your demo link and modifications
-
-### 🌟 Community Showcases
-
-Check out these amazing implementations by our community:
-
-*[Your project here - be the first to showcase!]*
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-<div align="center">
-
-Made with ❤️ using [Astro](https://astro.build) and [Vercel AI SDK](https://sdk.vercel.ai)
-
-</div>
+1. Root del proyecto: carpeta `frontend/` (en monorepo) o raíz (en este clone).
+2. Variable `PUBLIC_LARIA_API_URL` = URL del backend (Render).
+3. Añadir el dominio Vercel a `CORS_ORIGINS` del backend.
