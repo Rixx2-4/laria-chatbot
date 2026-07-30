@@ -21,6 +21,9 @@ const initialAuthView = view === "register" ? "register" : "login";
     />
   </head>
   <body class="h-screen overflow-hidden antialiased">
+    <script is:inline>
+      (function(){var t=localStorage.getItem("laria-theme");if(!t)t=window.matchMedia("(prefers-color-scheme:dark)").matches?"dark-blue":"pastel";document.documentElement.setAttribute("data-theme",t)})()
+    </script>
     <AppShell client:only="react" initialAuthView={initialAuthView} />
   </body>
 </html>

@@ -22,6 +22,16 @@ import { LariaMark } from "../components/brand/LariaMark";
     />
   </head>
   <body class="antialiased text-foreground">
+    <script is:inline>
+      (function(){var t=localStorage.getItem("laria-theme");if(!t)t=window.matchMedia("(prefers-color-scheme:dark)").matches?"dark-blue":"pastel";document.documentElement.setAttribute("data-theme",t)})()
+    </script>
+    <button id="theme-toggle-landing" class="fixed left-3 top-3 z-50 rounded-md border border-border bg-card/80 backdrop-blur transition hover:bg-secondary" aria-label="Cambiar tema">
+      <svg id="toggle-moon" class="size-5 p-0.5 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+      <svg id="toggle-sun" class="size-5 p-0.5 text-ink hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+    </button>
+    <script is:inline>
+      (function(){var b=document.getElementById("theme-toggle-landing"),m=document.getElementById("toggle-moon"),s=document.getElementById("toggle-sun"),t=localStorage.getItem("laria-theme")||(window.matchMedia("(prefers-color-scheme:dark)").matches?"dark-blue":"pastel");m.classList.toggle("hidden",t==="dark-blue");s.classList.toggle("hidden",t==="pastel");b.onclick=function(){var n=t==="pastel"?"dark-blue":"pastel";t=n;document.documentElement.setAttribute("data-theme",n);localStorage.setItem("laria-theme",n);m.classList.toggle("hidden",t==="dark-blue");s.classList.toggle("hidden",t==="pastel")}})()
+    </script>
     <main class="relative flex min-h-screen flex-col justify-center px-6 py-16 sm:px-10">
       <div class="mx-auto w-full max-w-4xl animate-brand-rise">
         <LariaMark size="hero" subtitle client:load />

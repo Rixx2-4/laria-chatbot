@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { BookOpen, Brain, LogOut, MessageSquare, ClipboardList } from "lucide-react";
+import { ThemeToggle } from "@/components/app/ThemeToggle";
 import { LariaMark } from "@/components/brand/LariaMark";
 import { LoginForm, RegisterForm } from "@/components/auth/AuthForms";
 import { DocumentList, UploadDocument } from "@/components/documents/Documents";
@@ -114,31 +115,32 @@ export default function AppShell({ initialAuthView = "login" }: Props) {
     setAuthView("login");
   }
 
-  if (!authed) {
-    return (
-      <div className="flex min-h-screen items-center justify-center px-4 py-10">
-        <div className="w-full max-w-lg rounded-2xl border border-border bg-card/90 p-6 shadow-sm backdrop-blur sm:p-8">
-          <LariaMark size="lg" subtitle className="mb-8 animate-brand-rise" />
-          {authView === "login" ? (
-            <LoginForm
-              onSuccess={() => setAuthed(true)}
-              onSwitchToRegister={() => setAuthView("register")}
-            />
-          ) : (
-            <RegisterForm
-              onSuccess={() => setAuthed(true)}
-              onSwitchToLogin={() => setAuthView("login")}
-            />
-          )}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="flex h-screen min-h-0 flex-col overflow-hidden">
+      <div className="fixed left-3 top-3 z-50">
+        <ThemeToggle />
+      </div>
+      {!authed ? (
+        <div className="flex min-h-screen items-center justify-center px-4 py-10">
+          <div className="w-full max-w-lg rounded-2xl border border-border bg-card/90 p-6 shadow-sm backdrop-blur sm:p-8">
+            <LariaMark size="lg" subtitle className="mb-8 animate-brand-rise" />
+            {authView === "login" ? (
+              <LoginForm
+                onSuccess={() => setAuthed(true)}
+                onSwitchToRegister={() => setAuthView("register")}
+              />
+            ) : (
+              <RegisterForm
+                onSuccess={() => setAuthed(true)}
+                onSwitchToLogin={() => setAuthView("login")}
+              />
+            )}
+          </div>
+        </div>
+      ) : (
+        <>
       <header className="flex items-center justify-between border-b border-border/80 bg-card/70 px-4 py-3 backdrop-blur">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <button
             type="button"
             className="rounded-md border border-border px-2 py-1 text-xs md:hidden"
@@ -148,7 +150,7 @@ export default function AppShell({ initialAuthView = "login" }: Props) {
           </button>
           <LariaMark size="sm" />
         </div>
-        <div className="flex items-center gap-3 text-sm">
+        <div className="flex items-center gap-1 text-sm">
           <span className="hidden text-muted-foreground sm:inline">{userLabel}</span>
           <Button type="button" variant="ghost" size="sm" onClick={logout}>
             <LogOut className="size-4" />
@@ -300,6 +302,8 @@ export default function AppShell({ initialAuthView = "login" }: Props) {
           )}
         </main>
       </div>
+      </>
+      )}
     </div>
   );
 }

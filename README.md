@@ -16,10 +16,19 @@ LARIA no es un chatbot genérico. El estudiante sube material, pregunta sobre es
 
 ```bash
 cp .env.example .env
-# PUBLIC_LARIA_API_URL=http://IP-DEL-BACKEND:8000
+# Por defecto: https://laria-ia.onrender.com
 pnpm install
 pnpm dev
 ```
+
+Backend en Render:
+
+| Uso | URL |
+|-----|-----|
+| Base | https://laria-ia.onrender.com |
+| Health | https://laria-ia.onrender.com/health |
+| Docs | https://laria-ia.onrender.com/docs |
+| API | https://laria-ia.onrender.com/api/v1 |
 
 ## Scripts
 
